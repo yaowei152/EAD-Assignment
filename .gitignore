@@ -1,0 +1,24 @@
+# Build results
+bin/
+obj/
+out/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# SQLite database (generated at runtime via migrations)
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# Local tooling (not part of the VS solution)
+.claude/

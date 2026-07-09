@@ -1,0 +1,46 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center py-5">
+    <h1 class="display-4">Arcane Vault</h1>
+    <p class="lead">A collection management prototype connecting hobby shops and collectors.</p>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <p>Welcome back, <strong>@User.Identity!.Name</strong>!</p>
+        <a asp-page="/CollectionItems/Index" class="btn btn-primary btn-lg me-2">Go to My Collection</a>
+        @if (User.IsInRole(RoleNames.Staff))
+        {
+            <a asp-page="/Analytics/Dashboard" class="btn btn-outline-secondary btn-lg">View Analytics</a>
+        }
+    }
+    else
+    {
+        <p>Register as a collector or shop owner to start managing your personal collection online.</p>
+        <a asp-page="/Account/Register" class="btn btn-primary btn-lg me-2">Get Started</a>
+        <a asp-page="/Account/Login" class="btn btn-outline-secondary btn-lg">Log In</a>
+    }
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <h3>Track Your Collection</h3>
+        <p>Add, update, and organize your collectible items by category, with quantities tracked over time.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Search Instantly</h3>
+        <p>Find any item in your collection by name, category, or quantity with a single search box.</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Market Insights</h3>
+        <p>Staff can view platform-wide analytics on popular items, category demand, and collector activity.</p>
+    </div>
+</div>

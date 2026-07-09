@@ -1,0 +1,45 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page "{id:int}"
+@model ArcaneVault.Web.Pages.CollectionItems.DeleteModel
+@{
+    ViewData["Title"] = "Delete Item";
+}
+
+<h1>Delete Item</h1>
+
+<div class="alert alert-warning">Are you sure you want to remove this item from your collection?</div>
+
+@if (Model.Item is not null)
+{
+    <dl class="row">
+        <dt class="col-sm-3">Item Name</dt>
+        <dd class="col-sm-9">@Model.Item.ItemName</dd>
+
+        <dt class="col-sm-3">Categories</dt>
+        <dd class="col-sm-9">
+            @if (Model.Item.Categories.Count == 0)
+            {
+                <span class="text-muted">None assigned</span>
+            }
+            else
+            {
+                foreach (var category in Model.Item.Categories)
+                {
+                    <span class="badge bg-secondary me-1">@category.CategoryName</span>
+                }
+            }
+        </dd>
+
+        <dt class="col-sm-3">Current Quantity</dt>
+        <dd class="col-sm-9">@Model.Item.CurrentQuantity</dd>
+    </dl>
+
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-page="Index" class="btn btn-link">Cancel</a>
+    </form>
+}

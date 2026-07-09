@@ -1,0 +1,47 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page "{id:int}"
+@model ArcaneVault.Web.Pages.CollectionItems.EditModel
+@{
+    ViewData["Title"] = "Edit Collection Item";
+}
+
+<h1>Edit Collection Item</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.ItemName" class="form-label"></label>
+                <input asp-for="Input.ItemName" class="form-control" />
+                <span asp-validation-for="Input.ItemName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.StartingQuantity" class="form-label"></label>
+                <input asp-for="Input.StartingQuantity" type="number" class="form-control" readonly />
+                <div class="form-text">Fixed at creation and cannot be changed.</div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.CurrentQuantity" class="form-label"></label>
+                <input asp-for="Input.CurrentQuantity" type="number" min="0" class="form-control" />
+                <span asp-validation-for="Input.CurrentQuantity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.CategoryCodes" class="form-label"></label>
+                <select asp-for="Input.CategoryCodes" asp-items="@(new SelectList(Model.AvailableCategories, nameof(CategoryDto.CategoryCode), nameof(CategoryDto.CategoryName)))" class="form-select" multiple size="6"></select>
+                <div class="form-text">Hold Ctrl (or Cmd) to select multiple categories.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-page="Index" class="btn btn-link">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

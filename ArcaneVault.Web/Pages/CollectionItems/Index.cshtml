@@ -1,0 +1,89 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page
+@model ArcaneVault.Web.Pages.CollectionItems.IndexModel
+@{
+    ViewData["Title"] = "My Collection";
+}
+
+<h1>My Collection</h1>
+<p class="text-muted">Items you own, grouped by category. Signed in as <strong>@User.Identity!.Name</strong>.</p>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success">@Model.SuccessMessage</div>
+}
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+<div class="d-flex justify-content-between align-items-end mb-3 flex-wrap gap-2">
+    <form method="get" class="d-flex gap-2">
+        <input type="text" name="Search" value="@Model.Search" class="form-control" placeholder="Search by name, category, or quantity..." style="min-width: 320px;" />
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+        @if (!string.IsNullOrEmpty(Model.Search))
+        {
+            <a asp-page="Index" class="btn btn-outline-secondary">Clear</a>
+        }
+    </form>
+    <a asp-page="Create" class="btn btn-primary">+ Add Item</a>
+</div>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Categories</th>
+            <th>Starting Qty</th>
+            <th>Current Qty</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.ItemName</td>
+                <td>
+                    @if (item.Categories.Count == 0)
+                    {
+                        <span class="text-muted">-</span>
+                    }
+                    else
+                    {
+                        foreach (var category in item.Categories)
+                        {
+                            <span class="badge bg-secondary me-1">@category.CategoryName</span>
+                        }
+                    }
+                </td>
+                <td>@item.StartingQuantity</td>
+                <td>@item.CurrentQuantity</td>
+                <td class="text-end">
+                    <a asp-page="Details" asp-route-id="@item.ItemId" class="btn btn-sm btn-outline-secondary">Details</a>
+                    <a asp-page="Edit" asp-route-id="@item.ItemId" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-page="Delete" asp-route-id="@item.ItemId" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+        @if (Model.Items.Count == 0)
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted">
+                    @if (!string.IsNullOrEmpty(Model.Search))
+                    {
+                        <text>No items match "@Model.Search".</text>
+                    }
+                    else
+                    {
+                        <text>Your collection is empty. Add your first item above.</text>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

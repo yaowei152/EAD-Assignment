@@ -1,0 +1,37 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page
+@model ArcaneVault.Web.Pages.Categories.CreateModel
+@{
+    ViewData["Title"] = "New Category";
+}
+
+<h1>New Category</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <form method="post">
+            <div class="mb-3">
+                <label asp-for="Input.CategoryCode" class="form-label"></label>
+                <input asp-for="Input.CategoryCode" class="form-control" placeholder="e.g. CARD" />
+                <span asp-validation-for="Input.CategoryCode" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.CategoryName" class="form-label"></label>
+                <input asp-for="Input.CategoryName" class="form-control" placeholder="e.g. Trading Cards" />
+                <span asp-validation-for="Input.CategoryName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a asp-page="Index" class="btn btn-link">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

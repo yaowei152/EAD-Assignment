@@ -1,0 +1,58 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page
+@model ArcaneVault.Web.Pages.Categories.IndexModel
+@{
+    ViewData["Title"] = "Category Management";
+}
+
+<h1>Category Management</h1>
+<p class="text-muted">Master list of collection categories available on the platform.</p>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success">@Model.SuccessMessage</div>
+}
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">+ New Category</a>
+</p>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Items Using This Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.Categories)
+        {
+            <tr>
+                <td>@category.CategoryCode</td>
+                <td>@category.CategoryName</td>
+                <td>@category.ItemCount</td>
+                <td class="text-end">
+                    <a asp-page="Details" asp-route-code="@category.CategoryCode" class="btn btn-sm btn-outline-secondary">Details</a>
+                    <a asp-page="Edit" asp-route-code="@category.CategoryCode" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-page="Delete" asp-route-code="@category.CategoryCode" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+        @if (Model.Categories.Count == 0)
+        {
+            <tr>
+                <td colspan="4" class="text-center text-muted">No categories yet. Create the first one above.</td>
+            </tr>
+        }
+    </tbody>
+</table>

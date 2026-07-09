@@ -1,0 +1,44 @@
+@*
+    Name: <YOUR NAME>
+    Admin No: 241036U
+    Tutorial Group: <TUTORIAL GROUP>
+*@
+@page "{id:int}"
+@model ArcaneVault.Web.Pages.CollectionItems.DetailsModel
+@{
+    ViewData["Title"] = "Item Details";
+}
+
+<h1>Item Details</h1>
+
+@if (Model.Item is not null)
+{
+    <dl class="row">
+        <dt class="col-sm-3">Item Name</dt>
+        <dd class="col-sm-9">@Model.Item.ItemName</dd>
+
+        <dt class="col-sm-3">Categories</dt>
+        <dd class="col-sm-9">
+            @if (Model.Item.Categories.Count == 0)
+            {
+                <span class="text-muted">None assigned</span>
+            }
+            else
+            {
+                foreach (var category in Model.Item.Categories)
+                {
+                    <span class="badge bg-secondary me-1">@category.CategoryName</span>
+                }
+            }
+        </dd>
+
+        <dt class="col-sm-3">Starting Quantity</dt>
+        <dd class="col-sm-9">@Model.Item.StartingQuantity</dd>
+
+        <dt class="col-sm-3">Current Quantity</dt>
+        <dd class="col-sm-9">@Model.Item.CurrentQuantity</dd>
+    </dl>
+
+    <a asp-page="Edit" asp-route-id="@Model.Item.ItemId" class="btn btn-primary">Edit</a>
+    <a asp-page="Index" class="btn btn-link">Back to List</a>
+}
