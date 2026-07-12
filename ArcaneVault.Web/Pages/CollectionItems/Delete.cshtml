@@ -9,12 +9,21 @@
     ViewData["Title"] = "Delete Item";
 }
 
-<h1>Delete Item</h1>
+<nav class="crumbs" aria-label="Breadcrumb">
+    <a asp-page="Index">My Collection</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Delete Item</span>
+</nav>
+
+<div class="page-header">
+    <h1>Delete Item</h1>
+</div>
 
 <div class="alert alert-warning">Are you sure you want to remove this item from your collection?</div>
 
 @if (Model.Item is not null)
 {
+    <div class="vault-panel">
     <dl class="row">
         <dt class="col-sm-3">Item Name</dt>
         <dd class="col-sm-9">@Model.Item.ItemName</dd>
@@ -42,4 +51,5 @@
         <button type="submit" class="btn btn-danger">Delete</button>
         <a asp-page="Index" class="btn btn-link">Cancel</a>
     </form>
+    </div>
 }

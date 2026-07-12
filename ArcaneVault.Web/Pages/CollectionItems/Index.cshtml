@@ -9,21 +9,27 @@
     ViewData["Title"] = "My Collection";
 }
 
-<h1>My Collection</h1>
-<p class="text-muted">Items you own, grouped by category. Signed in as <strong>@User.Identity!.Name</strong>.</p>
+<div class="page-header">
+    <span class="eyebrow">Signed in as @User.Identity!.Name</span>
+    <h1 class="mt-2">My Collection</h1>
+    <p class="text-muted">Items you own, organised by category.</p>
+</div>
 
 @if (!string.IsNullOrEmpty(Model.SuccessMessage))
 {
-    <div class="alert alert-success">@Model.SuccessMessage</div>
+    <div class="alert alert-success" data-toast role="status">@Model.SuccessMessage</div>
 }
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
-    <div class="alert alert-danger">@Model.ErrorMessage</div>
+    <div class="alert alert-danger" data-toast role="alert">@Model.ErrorMessage</div>
 }
 
-<div class="d-flex justify-content-between align-items-end mb-3 flex-wrap gap-2">
-    <form method="get" class="d-flex gap-2">
-        <input type="text" name="Search" value="@Model.Search" class="form-control" placeholder="Search by name, category, or quantity..." style="min-width: 320px;" />
+<div class="toolbar">
+    <form method="get" role="search">
+        <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" name="Search" value="@Model.Search" class="form-control" placeholder="Search by name, category, or quantity..." aria-label="Search collection" />
+        </div>
         <button type="submit" class="btn btn-outline-primary">Search</button>
         @if (!string.IsNullOrEmpty(Model.Search))
         {
@@ -33,57 +39,62 @@
     <a asp-page="Create" class="btn btn-primary">+ Add Item</a>
 </div>
 
-<table class="table table-striped align-middle">
-    <thead>
-        <tr>
-            <th>Item Name</th>
-            <th>Categories</th>
-            <th>Starting Qty</th>
-            <th>Current Qty</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+@if (Model.Items.Count == 0)
+{
+    <div class="empty-state" data-reveal>
+        <div class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+        </div>
+        @if (!string.IsNullOrEmpty(Model.Search))
+        {
+            <h2>No items match "@Model.Search"</h2>
+            <p>Try a different name, category, or quantity — or clear the search to see everything in your vault.</p>
+            <a asp-page="Index" class="btn btn-outline-primary">Clear Search</a>
+        }
+        else
+        {
+            <h2>Your vault is empty</h2>
+            <p>Every collection starts with a single treasure. Add your first item and watch your vault come to life.</p>
+            <a asp-page="Create" class="btn btn-primary">Add Your First Item</a>
+        }
+    </div>
+}
+else
+{
+    <div class="item-grid" data-reveal-group>
         @foreach (var item in Model.Items)
         {
-            <tr>
-                <td>@item.ItemName</td>
-                <td>
+            <article class="item-card">
+                <h2 class="item-name">@item.ItemName</h2>
+                <div class="item-cats">
                     @if (item.Categories.Count == 0)
                     {
-                        <span class="text-muted">-</span>
+                        <span class="text-muted small">Uncategorised</span>
                     }
                     else
                     {
                         foreach (var category in item.Categories)
                         {
-                            <span class="badge bg-secondary me-1">@category.CategoryName</span>
+                            <span class="badge bg-secondary">@category.CategoryName</span>
                         }
                     }
-                </td>
-                <td>@item.StartingQuantity</td>
-                <td>@item.CurrentQuantity</td>
-                <td class="text-end">
+                </div>
+                <div class="item-stats">
+                    <div class="item-stat">
+                        <div class="num">@item.StartingQuantity</div>
+                        <div class="lbl">Starting</div>
+                    </div>
+                    <div class="item-stat">
+                        <div class="num">@item.CurrentQuantity</div>
+                        <div class="lbl">Current</div>
+                    </div>
+                </div>
+                <div class="item-actions">
                     <a asp-page="Details" asp-route-id="@item.ItemId" class="btn btn-sm btn-outline-secondary">Details</a>
                     <a asp-page="Edit" asp-route-id="@item.ItemId" class="btn btn-sm btn-outline-primary">Edit</a>
                     <a asp-page="Delete" asp-route-id="@item.ItemId" class="btn btn-sm btn-outline-danger">Delete</a>
-                </td>
-            </tr>
+                </div>
+            </article>
         }
-        @if (Model.Items.Count == 0)
-        {
-            <tr>
-                <td colspan="5" class="text-center text-muted">
-                    @if (!string.IsNullOrEmpty(Model.Search))
-                    {
-                        <text>No items match "@Model.Search".</text>
-                    }
-                    else
-                    {
-                        <text>Your collection is empty. Add your first item above.</text>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    </div>
+}

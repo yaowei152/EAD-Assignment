@@ -9,38 +9,142 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center py-5">
-    <h1 class="display-4">Arcane Vault</h1>
-    <p class="lead">A collection management prototype connecting hobby shops and collectors.</p>
+@section Head {
+    <link rel="preload" href="~/img/hero-vault.jpg" as="image" />
+}
 
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <p>Welcome back, <strong>@User.Identity!.Name</strong>!</p>
-        <a asp-page="/CollectionItems/Index" class="btn btn-primary btn-lg me-2">Go to My Collection</a>
-        @if (User.IsInRole(RoleNames.Staff))
+<section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+        <span class="hero-eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5Z"/></svg>
+            Collection management, reimagined
+        </span>
+        <h1>Every treasure deserves <em>a vault</em>.</h1>
+        <p class="lead">Catalogue, track, and understand your collection — from holographic cards to century-old coins — in one elegant place.</p>
+
+        @if (User.Identity?.IsAuthenticated == true)
         {
-            <a asp-page="/Analytics/Dashboard" class="btn btn-outline-secondary btn-lg">View Analytics</a>
+            <div class="hero-actions">
+                <a asp-page="/CollectionItems/Index" class="btn btn-primary btn-lg">Go to My Collection</a>
+                @if (User.IsInRole(RoleNames.Staff))
+                {
+                    <a asp-page="/Analytics/Dashboard" class="btn btn-outline-secondary btn-lg">View Analytics</a>
+                }
+            </div>
         }
-    }
-    else
-    {
-        <p>Register as a collector or shop owner to start managing your personal collection online.</p>
-        <a asp-page="/Account/Register" class="btn btn-primary btn-lg me-2">Get Started</a>
-        <a asp-page="/Account/Login" class="btn btn-outline-secondary btn-lg">Log In</a>
-    }
-</div>
+        else
+        {
+            <div class="hero-actions">
+                <a asp-page="/Account/Register" class="btn btn-primary btn-lg">Start Your Vault</a>
+                <a asp-page="/Account/Login" class="btn btn-outline-secondary btn-lg">Log In</a>
+            </div>
+        }
+        <div class="scroll-cue" aria-hidden="true"></div>
+    </div>
+</section>
 
-<div class="row mt-5">
-    <div class="col-md-4">
-        <h3>Track Your Collection</h3>
-        <p>Add, update, and organize your collectible items by category, with quantities tracked over time.</p>
+<section class="home-section">
+    <div class="section-head" data-reveal>
+        <span class="eyebrow">What it does</span>
+        <h2>Built around the way collectors actually work</h2>
     </div>
-    <div class="col-md-4">
-        <h3>Search Instantly</h3>
-        <p>Find any item in your collection by name, category, or quantity with a single search box.</p>
+    <div class="feature-grid" data-reveal-group>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+            </div>
+            <h3>Track Your Collection</h3>
+            <p>Add, update, and organize your collectible items by category, with quantities tracked over time.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </div>
+            <h3>Search Instantly</h3>
+            <p>Find any item in your collection by name, category, or quantity with a single search box.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7l-3-3L4 16.6"/></svg>
+            </div>
+            <h3>Market Insights</h3>
+            <p>Staff can view platform-wide analytics on popular items, category demand, and collector activity.</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h3>Market Insights</h3>
-        <p>Staff can view platform-wide analytics on popular items, category demand, and collector activity.</p>
+</section>
+
+<section class="home-section">
+    <div class="showcase">
+        <div class="showcase-media" data-parallax data-reveal>
+            <img src="~/img/auth-collectibles.jpg" alt="Rare collectibles on dark velvet: a holographic trading card, gold coins, a dragon figurine, and a vintage comic." />
+        </div>
+        <div class="showcase-copy" data-reveal>
+            <span class="eyebrow">For collectors &amp; shops</span>
+            <h2>Your collection, finally in focus</h2>
+            <p class="text-muted mt-3">Whether you run a hobby shop or curate a personal trove, Arcane Vault keeps the full picture — what you own, where it lives, and how it moves.</p>
+            <ul class="check-list">
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    Starting quantity preserved as a permanent record of provenance
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    Multi-category tagging so one item can live in many worlds
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    Platform-wide analytics for staff: demand, activity, and trends
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+</section>
+
+<section class="home-section text-center">
+    <div class="section-head mx-auto" data-reveal>
+        <span class="eyebrow">Five worlds, one vault</span>
+        <h2>Whatever you collect, it belongs here</h2>
+    </div>
+    <div class="cat-strip" data-reveal-group>
+        <span class="cat-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6"/></svg>
+            Trading Cards
+        </span>
+        <span class="cat-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+            Coins &amp; Currency
+        </span>
+        <span class="cat-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            Action Figures
+        </span>
+        <span class="cat-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Comics &amp; Manga
+        </span>
+        <span class="cat-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h.01M7 15h.01M17 9h.01M17 15h.01M12 9v6"/></svg>
+            Stamps
+        </span>
+    </div>
+</section>
+
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <section class="cta-band" data-reveal>
+        <span class="eyebrow justify-content-center">Free to join</span>
+        <h2>Open your vault today</h2>
+        <p>Register as a collector or shop owner and bring order to everything you treasure.</p>
+        <a asp-page="/Account/Register" class="btn btn-primary btn-lg">Get Started</a>
+    </section>
+}
+else
+{
+    <section class="cta-band" data-reveal>
+        <h2>Welcome back, @User.Identity!.Name</h2>
+        <p>Your vault is waiting. Pick up where you left off.</p>
+        <a asp-page="/CollectionItems/Index" class="btn btn-primary btn-lg">Open My Collection</a>
+    </section>
+}

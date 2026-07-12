@@ -8,15 +8,21 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ArcaneVault.Web</title>
+    <title>@ViewData["Title"] - Arcane Vault</title>
     <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ArcaneVault.Web.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Head", required: false)
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="page-curtain" aria-hidden="true"><span class="curtain-mark"></span></div>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Arcane Vault</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -26,33 +32,33 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/CollectionItems/Index">My Collection</a>
+                                <a class="nav-link" asp-area="" asp-page="/CollectionItems/Index">My Collection</a>
                             </li>
                             @if (User.IsInRole(RoleNames.Staff))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Categories/Index">Categories</a>
+                                    <a class="nav-link" asp-area="" asp-page="/Categories/Index">Categories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-page="/Analytics/Dashboard">Analytics</a>
+                                    <a class="nav-link" asp-area="" asp-page="/Analytics/Dashboard">Analytics</a>
                                 </li>
                             }
                         }
                     </ul>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav align-items-sm-center">
                         @if (User.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item d-flex align-items-center me-2">
-                                <span class="nav-link text-dark">
+                                <span class="nav-link">
                                     Hi, @User.Identity!.Name
                                     @if (User.IsInRole(RoleNames.Staff))
                                     {
-                                        <span class="badge bg-secondary">Staff</span>
+                                        <span class="badge bg-secondary ms-1">Staff</span>
                                     }
                                 </span>
                             </li>
@@ -65,10 +71,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link" asp-page="/Account/Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Account/Register">Register</a>
+                                <a class="btn btn-primary btn-sm ms-sm-2 mt-2 mt-sm-0" asp-page="/Account/Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -77,19 +83,23 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" id="main-content" class="pb-3 reveal">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Arcane Vault - A collection management prototype for IT2814
+        <div class="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <span><span class="footer-brand">Arcane Vault</span> &copy; 2026 &middot; A collection management prototype for IT2814</span>
+            <span class="d-none d-md-inline">Crafted for collectors &amp; hobby shops</span>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

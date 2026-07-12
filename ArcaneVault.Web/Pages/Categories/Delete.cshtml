@@ -9,12 +9,21 @@
     ViewData["Title"] = "Delete Category";
 }
 
-<h1>Delete Category</h1>
+<nav class="crumbs" aria-label="Breadcrumb">
+    <a asp-page="Index">Categories</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">Delete Category</span>
+</nav>
+
+<div class="page-header">
+    <h1>Delete Category</h1>
+</div>
 
 <div class="alert alert-warning">Are you sure you want to delete this category? This cannot be undone.</div>
 
 @if (Model.Category is not null)
 {
+    <div class="vault-panel">
     <dl class="row">
         <dt class="col-sm-3">Category Code</dt>
         <dd class="col-sm-9">@Model.Category.CategoryCode</dd>
@@ -37,4 +46,5 @@
         <button type="submit" class="btn btn-danger" @(Model.Category.ItemCount > 0 ? "disabled" : "")>Delete</button>
         <a asp-page="Index" class="btn btn-link">Cancel</a>
     </form>
+    </div>
 }

@@ -9,10 +9,19 @@
     ViewData["Title"] = "New Category";
 }
 
-<h1>New Category</h1>
+<nav class="crumbs" aria-label="Breadcrumb">
+    <a asp-page="Index">Categories</a>
+    <span class="sep" aria-hidden="true">/</span>
+    <span aria-current="page">New Category</span>
+</nav>
+
+<div class="page-header">
+    <h1>New Category</h1>
+</div>
 
 <div class="row">
     <div class="col-md-6">
+        <div class="vault-panel">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <form method="post">
@@ -29,6 +38,7 @@
             <button type="submit" class="btn btn-primary">Create</button>
             <a asp-page="Index" class="btn btn-link">Cancel</a>
         </form>
+        </div>
     </div>
 </div>
 
